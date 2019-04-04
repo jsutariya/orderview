@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top" />
+    <columns name="sales_order_columns">
+        <actionsColumn name="quickview" class="JS\OrderView\Ui\Component\Listing\Column\OrderViewAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="quickViewUrlPath" xsi:type="string">orderview/index/index</item>
+                    <item name="urlEntityParamName" xsi:type="string">order_id</item>
+                    <item name="fieldClass" xsi:type="string">order-quick-view</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>entity_id</indexField>
+                <label>View</label>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

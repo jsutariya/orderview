@@ -1,0 +1,58 @@
+<?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\View\Tab\Info */ ?>
+<?php $_order = $block->getOrder() ?>
+
+<?= $block->getChildHtml('order_info') ?>
+<input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
+
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Payment &amp; Shipping Method') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-payment-method<?php if ($_order->getIsVirtual()): ?> order-payment-method-virtual<?php endif; ?>">
+            <?php /* Payment Method */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= /* @escapeNotVerified */ __('Payment Information') ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <div class="order-payment-method-title"><?= $block->getPaymentHtml() ?></div>
+                <div class="order-payment-currency"><?= /* @escapeNotVerified */ __('The order was placed using %1.', $_order->getOrderCurrencyCode()) ?></div>
+                <div class="order-payment-additional">
+                    <?= $block->getChildHtml('order_payment_additional') ?>
+                    <?= $block->getChildHtml('payment_additional_info') ?>
+                </div>
+            </div>
+        </div>
+        <?= $block->getChildHtml('order_shipping_view') ?>
+    </div>
+</section>
+
+<?= $block->getChildHtml('order_additional_info') ?>
+
+<?= $block->getGiftOptionsHtml() ?>
+
+<section class="admin__page-section order-items-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Items Ordered') ?></span>
+    </div>
+    <?= $block->getItemsHtml() ?>
+</section>
+
+<section class="admin__page-section order-totals-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Order Total') ?></span>
+    </div>
+    <div class="admin__page-section-content order-totals-container">
+        <div class="admin__page-section-item order-totals">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= /* @escapeNotVerified */ __('Order Totals') ?></span>
+            </div>
+            <?= $block->getChildHtml('order_totals') ?>
+        </div>
+    </div>
+</section>
+
+<?= $block->getChildHtml('popup_window') ?>
+<style>
+    .order-addresses,.order-view-billing-shipping{width:53%;float:left}.admin__page-section-content>.order-account-information,.admin__page-section-content>.order-information{width:90%}.order-view-account-information .order-account-information{float:left;clear:left;margin-top:3rem}.order-view-account-information>.admin__page-section-content{float:left;width:45%}.order-totals-container .order-comments-history,.order-totals-container .order-totals{width:100%}.order-totals-container .order-comments-history{margin-top:4em}.order-totals-section{width:35%;float:right}.order-items-section{width:60%;float:left}
+</style>

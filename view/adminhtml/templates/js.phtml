@@ -1,0 +1,39 @@
+<div id="order_quick_view"></div>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "jquery/ui",
+        'Magento_Ui/js/modal/modal'
+    ], function($, ui, modal){
+        var options = {
+            type: 'popup',
+            responsive: true,
+            innerScroll: true,
+            modalClass: 'order-details-popup-main-class',
+            buttons: [{
+                text: $.mage.__('Close'),
+                class: 'action close btn btn-default',
+                click: function () {
+                    this.closeModal();
+                }
+            }],
+            opened: function($Event) {
+                $(".modal-footer").hide();
+            }
+        };
+        "use strict";
+        $(document).ready(function(){
+            $('body').on("click", ".order-quick-view > a.action-menu-item", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr("href"),
+                    type: "GET",
+                    showLoader: true
+                }).done(function (data) {
+                    $('#order_quick_view').html(data).modal(options).modal('openModal');
+                });
+            });
+        });
+    });
+</script>
+<style>.order-quick-view .action-menu-item::before{content:'\e60f';-webkit-font-smoothing:antialiased;font-family:'Admin Icons';color:#333;text-align:center;line-height:20px}.order-quick-view .action-menu-item:hover{text-decoration:none}.order-quick-view .action-menu-item{display:block;text-align:center}</style>

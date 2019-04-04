@@ -1,0 +1,22 @@
+{
+    "name": "jsutariya/orderview",
+    "description": "",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "jsutariya@gmail.com",
+            "name": "Jaimin Sutariya"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "JS\\OrderView\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
