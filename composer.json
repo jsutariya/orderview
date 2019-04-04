@@ -1,15 +1,15 @@
 {
     "name": "jsutariya/orderview",
-    "description": "",
+    "description": "Order Quickview module",
     "type": "magento2-module",
-    "license": "proprietary",
+    "version": "1.0.0",
     "authors": [
         {
             "email": "jsutariya@gmail.com",
             "name": "Jaimin Sutariya"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {},
     "autoload": {
         "psr-4": {
