@@ -1,7 +1,7 @@
 # Magento 2 Order Quick View module
 This is a simple module for Magento 2 administrator to view orders in a nice popup from admin panel sales order grid. The module is basically inspired by woocommerce order quick view functionality in WordPress framework.
 
-###Installation:
+### Installation:
 Install using composer:
 
 `composer require jsutariya/orderview`
