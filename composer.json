@@ -2,6 +2,7 @@
     "name": "jsutariya/orderview",
     "description": "Order Quickview module",
     "type": "magento2-module",
+    "license": "MIT",
     "authors": [
         {
             "email": "jsutariya@gmail.com",
