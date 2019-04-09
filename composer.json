@@ -9,7 +9,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+        "jsutariya/general": "*"
+    },
     "autoload": {
         "psr-4": {
             "JS\\OrderView\\": ""
