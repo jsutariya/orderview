@@ -3,12 +3,12 @@
     <update handle="empty"/>
     <update handle="sales_order_item_price"/>
     <container name="order_data">
-        <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Info" name="order_tab_info" template="JS_OrderView::order/view/info.phtml">
-                <block class="Magento\Sales\Block\Adminhtml\Order\View\Info" name="order_info" template="Magento_Sales::order/view/info.phtml">
+        <block class="Magento\Sales\Block\Adminhtml\Order\View\Tab\Info" name="order_tab_info" template="JS_OrderView::order/view/tab/info.phtml">
+                <block class="Magento\Sales\Block\Adminhtml\Order\View\Info" name="order_info" template="JS_OrderView::order/view/info.phtml">
                     <container name="extra_customer_info"/>
                 </block>
                 <container name="order_additional_info"/>
-                <block class="Magento\Sales\Block\Adminhtml\Order\View\Items" name="order_items" template="Magento_Sales::order/view/items.phtml">
+                <block class="Magento\Sales\Block\Adminhtml\Order\View\Items" name="order_items" template="Magento_Sales::order/view/items.phtml" ifconfig="orderview/general/order_items">
                     <arguments>
                         <argument name="columns" xsi:type="array">
                             <item name="product" xsi:type="string" translate="true">Product</item>
@@ -37,11 +37,11 @@
                 </block>
 
                 <container name="payment_additional_info" htmlTag="div" htmlClass="order-payment-additional" />
-                <block class="Magento\Sales\Block\Adminhtml\Order\Payment" name="order_payment"/>
-                <block class="Magento\Sales\Block\Adminhtml\Order\Totals" name="order_totals" template="Magento_Sales::order/totals.phtml">
+                <block class="Magento\Sales\Block\Adminhtml\Order\Payment" name="order_payment"  ifconfig="orderview/general/order_payment"/>
+                <block class="Magento\Sales\Block\Adminhtml\Order\Totals" name="order_totals" template="Magento_Sales::order/totals.phtml" ifconfig="orderview/general/order_totals">
                     <block class="Magento\Sales\Block\Adminhtml\Order\Totals\Tax" name="tax" template="Magento_Sales::order/totals/tax.phtml"/>
                 </block>
-                <block class="Magento\Sales\Block\Adminhtml\Order\AbstractOrder" name="order_shipping_view" template="Magento_Shipping::order/view/info.phtml"/>
+                <block class="Magento\Sales\Block\Adminhtml\Order\AbstractOrder" name="order_shipping_view" template="Magento_Shipping::order/view/info.phtml" ifconfig="orderview/general/order_shipping_view"/>
             </block>
     </container>
 </layout>

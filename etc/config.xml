@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+   <default>
+    <orderview>
+      <general>
+        <popup_behavior>popup</popup_behavior>
+        <order_info>0</order_info>
+        <extra_customer_info>0</extra_customer_info>
+        <billing_address>1</billing_address>
+        <shipping_address>1</shipping_address>
+        <order_payment>1</order_payment>
+        <order_shipping_view>1</order_shipping_view>
+        <order_items>1</order_items>
+        <order_totals>1</order_totals>
+      </general>
+    </orderview>
+   </default>
+</config>

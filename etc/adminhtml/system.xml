@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="orderview" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Quick Order View</label>
+            <tab>jsutariya</tab>
+            <resource>JS_OrderView::config_js_orderview</resource>
+            <group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1" translate="label">
+                <label>General</label>
+                <field id="popup_behavior" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="1" translate="label comment" type="select">
+                    <label>Popup Behaviour</label>
+                    <comment>Choose to open a popup or a slide window</comment>
+                    <source_model>JS\OrderView\Model\Config\PopupBehavior</source_model>
+                </field>
+                <field id="order_info" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="2" translate="label comment" type="select">
+                    <label>Show Order Info</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="extra_customer_info" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="3" translate="label comment" type="select">
+                    <label>Show Customer Info</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="billing_address" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="4" translate="label comment" type="select">
+                    <label>Show Billing Address</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="shipping_address" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="5" translate="label comment" type="select">
+                    <label>Show Shipping Address</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="order_payment" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="6" translate="label comment" type="select">
+                    <label>Show Payment Data</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="order_shipping_view" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="7" translate="label comment" type="select">
+                    <label>Show Shipping Data</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="order_items" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="8" translate="label comment" type="select">
+                    <label>Show Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="order_totals" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="9" translate="label comment" type="select">
+                    <label>Show Totals</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,4 +1,5 @@
 <div id="order_quick_view"></div>
+<?php $orderViewHelper = $this->helper('JS\OrderView\Helper\Data'); ?>
 <script type="text/javascript">
     require([
         "jquery",
@@ -6,17 +7,11 @@
         'Magento_Ui/js/modal/modal'
     ], function($, ui, modal){
         var options = {
-            type: 'popup',
+            type: '<?= $orderViewHelper->popupBehaviour();?>',
             responsive: true,
             innerScroll: true,
             modalClass: 'order-details-popup-main-class',
-            buttons: [{
-                text: $.mage.__('Close'),
-                class: 'action close btn btn-default',
-                click: function () {
-                    this.closeModal();
-                }
-            }],
+            buttons: [],
             opened: function($Event) {
                 $(".modal-footer").hide();
             }

@@ -1,58 +1,173 @@
-<?php /** @var $block \Magento\Sales\Block\Adminhtml\Order\View\Tab\Info */ ?>
-<?php $_order = $block->getOrder() ?>
+<?php
 
-<?= $block->getChildHtml('order_info') ?>
-<input type="hidden" name="order_id" value="<?= /* @escapeNotVerified */ $_order->getId() ?>"/>
+$order = $block->getOrder();
 
-<section class="admin__page-section order-view-billing-shipping">
+$orderAdminDate = $block->formatDate(
+    $block->getOrderAdminDate($order->getCreatedAt()),
+    \IntlDateFormatter::MEDIUM,
+    true
+);
+
+$orderStoreDate = $block->formatDate(
+    $order->getCreatedAt(),
+    \IntlDateFormatter::MEDIUM,
+    true,
+    $block->getTimezoneForStore($order->getStore())
+);
+
+$customerUrl = $block->getCustomerViewUrl();
+$orderViewHelper = $this->helper('JS\OrderView\Helper\Data');
+?>
+
+<section class="admin__page-section order-view-account-information">
     <div class="admin__page-section-title">
-        <span class="title"><?= /* @escapeNotVerified */ __('Payment &amp; Shipping Method') ?></span>
+        <span class="title">
+            <?= $block->escapeHtml(__('Order #')); ?><a href="<?= $block->escapeHtml($block->getViewUrl($order->getId())) ?>"><?= $block->escapeHtml($order->getRealOrderId()) ?></a>
+        </span>
     </div>
     <div class="admin__page-section-content">
-        <div class="admin__page-section-item order-payment-method<?php if ($_order->getIsVirtual()): ?> order-payment-method-virtual<?php endif; ?>">
-            <?php /* Payment Method */ ?>
-            <div class="admin__page-section-item-title">
-                <span class="title"><?= /* @escapeNotVerified */ __('Payment Information') ?></span>
-            </div>
+        <div class="admin__page-section-item order-information">
+            <?php /* Order Information */ ?>
+            <?php if($orderViewHelper->showOrderInfo()) : ?>
             <div class="admin__page-section-item-content">
-                <div class="order-payment-method-title"><?= $block->getPaymentHtml() ?></div>
-                <div class="order-payment-currency"><?= /* @escapeNotVerified */ __('The order was placed using %1.', $_order->getOrderCurrencyCode()) ?></div>
-                <div class="order-payment-additional">
-                    <?= $block->getChildHtml('order_payment_additional') ?>
-                    <?= $block->getChildHtml('payment_additional_info') ?>
+                <table class="admin__table-secondary order-information-table">
+                <tr>
+                    <th><?= $block->escapeHtml(__('Order Date')) ?></th>
+                    <td><?= $block->escapeHtml($orderAdminDate) ?></td>
+                </tr>
+                <?php if ($orderAdminDate != $orderStoreDate):?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Order Date (%1)', $block->getTimezoneForStore($order->getStore()))) ?></th>
+                        <td><?= $block->escapeHtml($orderStoreDate) ?></td>
+                    </tr>
+                <?php endif;?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Order Status')) ?></th>
+                    <td><span id="order_status"><?= $block->escapeHtml($order->getStatusLabel()) ?></span></td>
+                </tr>
+                <?= $block->getChildHtml() ?>
+                <?php if ($block->isSingleStoreMode() == false):?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Purchased From')) ?></th>
+                        <td><?= $block->escapeHtml($block->getOrderStoreName(), ['br']) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($order->getRelationChildId()): ?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Link to the New Order')) ?></th>
+                        <td>
+                            <a href="<?= $block->escapeHtml($block->getViewUrl($order->getRelationChildId())) ?>">
+                                <?= $block->escapeHtml($order->getRelationChildRealId()) ?>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($order->getRelationParentId()): ?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Link to the Previous Order')) ?></th>
+                        <td>
+                            <a href="<?= $block->escapeHtml($block->getViewUrl($order->getRelationParentId())) ?>">
+                                <?= $block->escapeHtml($order->getRelationParentRealId()) ?>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($order->getGlobalCurrencyCode() != $order->getBaseCurrencyCode()): ?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('%1 / %2 rate:', $order->getGlobalCurrencyCode(), $order->getBaseCurrencyCode())) ?></th>
+                        <td><?= $block->escapeHtml($order->getBaseToGlobalRate()) ?></td>
+                    </tr>
+                <?php endif; ?>
+                <?php if ($order->getBaseCurrencyCode() != $order->getOrderCurrencyCode()): ?>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('%1 / %2 rate:', $order->getOrderCurrencyCode(), $order->getBaseCurrencyCode())) ?></th>
+                        <th><?= $block->escapeHtml($order->getBaseToOrderRate()) ?></th>
+                    </tr>
+                <?php endif; ?>
+            </table>
+            </div>
+            <?php endif; ?>
+        </div>
+
+        <?php if($orderViewHelper->showCustomerInfo()) : ?>
+        <div class="admin__page-section-item order-account-information">
+            <?php /* Account Information */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= $block->escapeHtml(__('Account Information')) ?></span>
+                <div class="actions">
+                    <?php if ($customerUrl) : ?>
+                        <a href="<?= /* @noEscape */ $customerUrl ?>" target="_blank">
+                            <?= $block->escapeHtml(__('Edit Customer')) ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
-        </div>
-        <?= $block->getChildHtml('order_shipping_view') ?>
-    </div>
-</section>
-
-<?= $block->getChildHtml('order_additional_info') ?>
-
-<?= $block->getGiftOptionsHtml() ?>
-
-<section class="admin__page-section order-items-section">
-    <div class="admin__page-section-title">
-        <span class="title"><?= /* @escapeNotVerified */ __('Items Ordered') ?></span>
-    </div>
-    <?= $block->getItemsHtml() ?>
-</section>
-
-<section class="admin__page-section order-totals-section">
-    <div class="admin__page-section-title">
-        <span class="title"><?= /* @escapeNotVerified */ __('Order Total') ?></span>
-    </div>
-    <div class="admin__page-section-content order-totals-container">
-        <div class="admin__page-section-item order-totals">
-            <div class="admin__page-section-item-title">
-                <span class="title"><?= /* @escapeNotVerified */ __('Order Totals') ?></span>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-account-information-table">
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Customer Name')) ?></th>
+                        <td>
+                            <?php if ($customerUrl): ?>
+                                <a href="<?= $block->escapeUrl($customerUrl) ?>" target="_blank">
+                                    <span><?= $block->escapeHtml($order->getCustomerName()) ?></span>
+                                </a>
+                            <?php else: ?>
+                                <?= $block->escapeHtml($order->getCustomerName()) ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Email')) ?></th>
+                        <td><a href="mailto:<?php echo $block->escapeHtml($order->getCustomerEmail()) ?>"><?php echo $block->escapeHtml($order->getCustomerEmail()) ?></a></td>
+                    </tr>
+                    <?php if ($groupName = $block->getCustomerGroupName()) : ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Customer Group')) ?></th>
+                            <td><?= $block->escapeHtml($groupName) ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php foreach ($block->getCustomerAccountData() as $data):?>
+                        <tr>
+                            <th><?= $block->escapeHtml($data['label']) ?></th>
+                            <td><?= $block->escapeHtml($data['value'], ['br']) ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                    <?= $block->getChildHtml('extra_customer_info') ?>
+                </table>
             </div>
-            <?= $block->getChildHtml('order_totals') ?>
         </div>
+        <?php endif; ?>
     </div>
 </section>
 
-<?= $block->getChildHtml('popup_window') ?>
-<style>
-    .order-addresses,.order-view-billing-shipping{width:53%;float:left}.admin__page-section-content>.order-account-information,.admin__page-section-content>.order-information{width:90%}.order-view-account-information .order-account-information{float:left;clear:left;margin-top:3rem}.order-view-account-information>.admin__page-section-content{float:left;width:45%}.order-totals-container .order-comments-history,.order-totals-container .order-totals{width:100%}.order-totals-container .order-comments-history{margin-top:4em}.order-totals-section{width:35%;float:right}.order-items-section{width:60%;float:left}
-</style>
+<?php if($orderViewHelper->showBillingAddress() || $orderViewHelper->showShippingAddress()) : ?>
+<section class="admin__page-section order-addresses">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('Address Information')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <?php if($orderViewHelper->showBillingAddress()) : ?>
+        <div class="admin__page-section-item order-billing-address">
+            <?php /* Billing Address */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= $block->escapeHtml(__('Billing Address')) ?></span>
+                <div class="actions"><?= /* @noEscape */ $block->getAddressEditLink($order->getBillingAddress()); ?></div>
+            </div>
+            <address class="admin__page-section-item-content"><?= /* @noEscape */ $block->getFormattedAddress($order->getBillingAddress()); ?></address>
+        </div>
+        <?php endif; ?>
+        <?php if (!$block->getOrder()->getIsVirtual()): ?>
+            <?php if($orderViewHelper->showShippingAddress()) : ?>
+            <div class="admin__page-section-item order-shipping-address">
+                <?php /* Shipping Address */ ?>
+                <div class="admin__page-section-item-title">
+                    <span class="title"><?= $block->escapeHtml(__('Shipping Address')) ?></span>
+                    <div class="actions"><?= /* @noEscape */ $block->getAddressEditLink($order->getShippingAddress()); ?></div>
+                </div>
+                <address class="admin__page-section-item-content"><?= /* @noEscape */ $block->getFormattedAddress($order->getShippingAddress()); ?></address>
+            </div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
