@@ -1,0 +1,17 @@
+.order-quick-view .action-menu-item::before{
+    content:'\e60f';
+    -webkit-font-smoothing:antialiased;
+    font-family:'Admin Icons';
+    color:#333;
+    text-align:center;
+    line-height:20px
+}
+
+.order-quick-view .action-menu-item:hover{
+    text-decoration:none
+}
+
+.order-quick-view .action-menu-item{
+    display:block;
+    text-align:center
+}
